@@ -105,6 +105,8 @@ fnVirtualAlloc Getaddress(const char * vv) {
 
                 if (strcmp(functionName, vv) == 0) {
                     DWORD funcRVA = funcArray[ordinalArray[i]];
+                    void* funadd = (void*)(baseAddress + funcRVA);
+                    std::cout<<functionName <<"found at: "<< funadd<<std::endl;
                     return (fnVirtualAlloc)(baseAddress + funcRVA);
                 }
             }
@@ -118,7 +120,7 @@ int main() {
     fnVirtualAlloc VirtualAlloc_Dynamic = Getaddress(functionName);
 
     if (VirtualAlloc_Dynamic) {
-        std::cout << "VirtualAlloc found at: " << VirtualAlloc_Dynamic << std::endl;
+        //std::cout << "VirtualAlloc found at: " << VirtualAlloc_Dynamic << std::endl;
 
         LPVOID addr = VirtualAlloc_Dynamic(NULL, sizeof(itsthecod345), MEM_COMMIT, PAGE_EXECUTE_READWRITE);
         if (addr) {
